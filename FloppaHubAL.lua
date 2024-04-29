@@ -56,6 +56,7 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "FloppaHub"
 })
 
+
 local Main = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://7733765398",
@@ -207,7 +208,113 @@ Telepor:AddDropdown({
         end
     end
 })
--- Base Class Trainer
+
+
+Telepor:AddDropdown({
+    Name = "Misc",
+    Default = "",
+    Options = {"Floppa (Thanasius)", "BlackSmith", "Mark Npc","Sería(alchemist)","Merchant(Item Seller)","Atalar(Shard Fusioner)","Doctor(westwood)","The SoulMaster","Floppa Doctor"},
+    Callback = function(Value)
+    if Value == "BlackSmith" then
+        local Vector3End = Vector3.new(2633.7, 386.4, -3687.0)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Mark Npc" then
+        local Vector3End = Vector3.new(-67.9, 42.9, -3280.7)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Sería(alchemist)" then
+        local Vector3End = Vector3.new(2585.1, 386.3, -4027.0)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Merchant(Item Seller)" then
+        local Vector3End = Vector3.new(-147.9, 43.5, -3449.0)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Atalar(Shard Fusioner) " then
+        local Vector3End = Vector3.new(-366.4, 43.8, -3390.5)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+
+    elseif Value == "Doctor(westwood)" then
+        local Vector3End = Vector3.new(2518.4, 386.3, -3625.0)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Floppa Doctor" then
+        local Vector3End = Vector3.new(-1838.1, 47.5, -3187.6)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    elseif Value == "Floppa (Thanasius)" then
+        local Vector3End = Vector3.new(1695, 12, -1654)
+        local Time = 0
+        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+        tween:Play()
+    end
+end  
+})
+
+
+Telepor:AddDropdown({
+    Name = "Enchants",
+    Default = "",
+    Options = { "Inferno Enchant Trigger", "Inferno Enchant End","Reaper Enchant","Midas Enchant","Lifesong Enchant","Cursed Enchant",},
+    Callback = function(Value)
+        if Value == "Inferno Enchant Trigger" then
+            local Vector3End = Vector3.new(-4344, 74, -2090)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+        elseif Value == "Inferno Enchant End" then
+            local Vector3End = Vector3.new(-4340, 67, -1587)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+        elseif Value == "Reaper Enchant" then
+            local Vector3End = Vector3.new(-2402, 47,-3718)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+        elseif Value == "Midas Enchant" then
+            local Vector3End = Vector3.new(-293, 44, -3176)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+        elseif Value == "Cursed Enchant" then
+            local Vector3End = Vector3.new(1651, 54, -3480)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+        elseif Value == "Lifesong Enchant" then
+            local Vector3End = Vector3.new(  5988, 53, -3467)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
+
+        end
+    end
+    })
+    -- Base Class Trainer
     Telepor:AddDropdown({
         Name = "Base Class Trainer",
         Default = "",
@@ -377,111 +484,6 @@ Telepor:AddDropdown({
 })
 
 
-
-Telepor:AddDropdown({
-    Name = "Misc",
-    Default = "",
-    Options = {"Floppa (Thanasius)", "BlackSmith", "Mark Npc","Sería(alchemist)","Merchant(Item Seller)","Atalar(Shard Fusioner)","Doctor(westwood)","The SoulMaster","Floppa Doctor"},
-    Callback = function(Value)
-    if Value == "BlackSmith" then
-        local Vector3End = Vector3.new(2633.7, 386.4, -3687.0)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Mark Npc" then
-        local Vector3End = Vector3.new(-67.9, 42.9, -3280.7)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Sería(alchemist)" then
-        local Vector3End = Vector3.new(2585.1, 386.3, -4027.0)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Merchant(Item Seller)" then
-        local Vector3End = Vector3.new(-147.9, 43.5, -3449.0)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Atalar(Shard Fusioner) " then
-        local Vector3End = Vector3.new(-366.4, 43.8, -3390.5)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-
-    elseif Value == "Doctor(westwood)" then
-        local Vector3End = Vector3.new(2518.4, 386.3, -3625.0)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Floppa Doctor" then
-        local Vector3End = Vector3.new(-1838.1, 47.5, -3187.6)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    elseif Value == "Floppa (Thanasius)" then
-        local Vector3End = Vector3.new(1695, 12, -1654)
-        local Time = 0
-        local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-            TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-        tween:Play()
-    end
-end  
-})
-
-
-Telepor:AddDropdown({
-    Name = "Enchants",
-    Default = "",
-    Options = { "Inferno Enchant Trigger", "Inferno Enchant End","Reaper Enchant","Midas Enchant","Lifesong Enchant","Cursed Enchant",},
-    Callback = function(Value)
-        if Value == "Inferno Enchant Trigger" then
-            local Vector3End = Vector3.new(-4344, 74, -2090)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-        elseif Value == "Inferno Enchant End" then
-            local Vector3End = Vector3.new(-4340, 67, -1587)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-        elseif Value == "Reaper Enchant" then
-            local Vector3End = Vector3.new(-2402, 47,-3718)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-        elseif Value == "Midas Enchant" then
-            local Vector3End = Vector3.new(-293, 44, -3176)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-        elseif Value == "Cursed Enchant" then
-            local Vector3End = Vector3.new(1651, 54, -3480)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-        elseif Value == "Lifesong Enchant" then
-            local Vector3End = Vector3.new(  5988, 53, -3467)
-            local Time = 0
-            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
-                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
-            tween:Play()
-
-        end
-    end
-    })
 --Gui
 local Dupe = Window:MakeTab({
     Name = "Dupe",
