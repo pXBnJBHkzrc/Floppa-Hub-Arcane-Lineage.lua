@@ -182,7 +182,7 @@ local Telepor = Window:MakeTab({
     PremiumOnly = false
 })
 Telepor:AddToggle({
-    Name = "No Fall-DMG",
+    Name = "No Fall-DMG (This will Make you safe for Tp)",
     Default = true,
     Save = true,
     Flag = "NoFall",
