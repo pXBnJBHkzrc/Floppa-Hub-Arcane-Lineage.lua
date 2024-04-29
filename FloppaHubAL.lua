@@ -1,3 +1,24 @@
+--Anti Adonis
+for _, v in pairs(getgc(true)) do
+    if pcall(function() return rawget(v, "indexInstance") end) and type(rawget(v, "indexInstance")) == "table" and (rawget(v, "indexInstance"))[1] == "kick" then
+        v.tvk = { "kick", function() return game.Workspace:WaitForChild("") end }
+    end
+end
+
+for _, v in next, getgc() do
+    if typeof(v) == "function" and islclosure(v) and not isexecutorclosure(v) then
+        local Constants = debug.getconstants(v)
+        if table.find(Constants, "Detected") and table.find(Constants, "crash") then
+            setthreadidentity(2)
+            hookfunction(v, function()
+                return task.wait(9e9)
+            end)
+            setthreadidentity(7)
+        end
+    end
+end
+--end of Anti Cheat
+
 -- locals
 local players = game:GetService("Players")
 local teleportService = game:GetService("TeleportService")
@@ -94,35 +115,33 @@ Main:AddToggle({
         local BaseClass = localPlayer.PlayerGui.StatMenu.Holder.ContentFrame.Stats.Body.RightColumn.Content.BaseClass.Type.Text
         while AutoQTE do
             task.wait()
-            -- Wizard
             if BaseClass == "Wizard" then
-                local ohBoolean1 = true
-                local ohString2 = "MagicQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(ohBoolean1, ohString2)
+                local Floppa1 = true
+                local Floppa2 = "MagicQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
                 localPlayer.PlayerGui.Combat.MagicQTE.Visible = false
-                -- Thief
             elseif BaseClass == "Thief" then
-                local ohBoolean1 = true
-                local ohString2 = "DaggerQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(ohBoolean1, ohString2)
+                local Floppa1 = true
+                local Floppa2 = "DaggerQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
                 localPlayer.PlayerGui.Combat.DaggerQTE.Visible = false
                 -- Slayer
             elseif BaseClass == "Slayer" then
-                local ohBoolean1 = true
-                local ohString2 = "SpearQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(ohBoolean1, ohString2)
+                local Floppa1 = true
+                local Floppa2 = "SpearQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
                 localPlayer.PlayerGui.Combat.SpearQTE.Visible = false
                 -- Fist
             elseif BaseClass == "Martial Artist" then
-                local ohBoolean1 = true
-                local ohString2 = "FistQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(ohBoolean1, ohString2)
+                local Floppa1 = true
+                local Floppa2 = "FistQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
                 localPlayer.PlayerGui.Combat.FistQTE.Visible = false
                 -- Sword
             elseif BaseClass == "Warrior" then
-                local ohBoolean1 = true
-                local ohString2 = "SwordQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(ohBoolean1, ohString2)
+                local Floppa1 = true
+                local Floppa2 = "SwordQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
                 localPlayer.PlayerGui.Combat.SwordQTE.Visible = false
                 task.wait()
             end
@@ -156,13 +175,30 @@ Main:AddButton({
         lp.Character.HumanoidRootPart.CFrame = originalLocation
     end
 })
-
+-- Teleports
 local Telepor = Window:MakeTab({
     Name = "Teleports",
     Icon = "rbxassetid://7733765398",
     PremiumOnly = false
 })
+Telepor:AddToggle({
+    Name = "No Fall-DMG",
+    Default = true,
+    Save = true,
+    Flag = "NoFall",
+    Callback = function(Value)
+        getgenv().NoFall = (Value)
 
+        local OldNameCall = nil
+        OldNameCall = hookmetamethod(game, "__namecall", function(self,...)
+            local Arg = {... }
+            if self.Name == "EnviroEffects" and getgenv().NoFall then
+                return
+            end
+            return OldNameCall(self,...)
+        end)
+    end
+})
 Telepor:AddDropdown({
     Name = "Spawns/Zones",
     Default = "",
