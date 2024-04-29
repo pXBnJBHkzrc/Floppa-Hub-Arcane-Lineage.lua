@@ -175,6 +175,52 @@ Main:AddButton({
         lp.Character.HumanoidRootPart.CFrame = originalLocation
     end
 })
+
+
+local merchNotiEnabled = false
+local merchNotifier = false
+Main:AddToggle({
+    Name = "Merchant Notifier",
+    Default = false,
+    Save = true,
+    Flag = "MerchantNoti",
+    Callback = function(value)
+        merchNotiEnabled = value
+        if merchNotiEnabled then
+            while merchNotiEnabled do
+                task.wait()
+                local merchant = game:GetService("Workspace").NPCs:FindFirstChild("Mysterious Merchant")
+                if merchant then
+                    OrionLib:MakeNotification({
+                        Name = "Mysterious Merchant Detected",
+                        Content = "The Mysterious Merchant Has Appear!",
+                        Image = "rbxassetid://7733765398",
+                        Time = 5
+                    })
+                    merchnotifier = true
+                    task.wait(10)
+                    merchnotifier = false
+                end
+            end
+        end
+    end
+})
+Main:AddButton({
+    Name = "Teleport To Merchant",
+    Callback = function()
+        if game:GetService("Workspace").NPCs:FindFirstChild("Mysterious Merchant") then
+            lp.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").NPCs:FindFirstChild(
+                "Mysterious Merchant").HumanoidRootPart.CFrame
+        else
+            OrionLib:MakeNotification({
+                Name = "Mysterius Merchant Has Not Spawned",
+                Content = "Can't Teleport To Mysterius Merchant, Has Not Appear",
+                Image = "rbxassetid://7733765398",
+                Time = 5
+            })
+        end
+    end
+})
 -- Teleports
 local Telepor = Window:MakeTab({
     Name = "Teleports",
