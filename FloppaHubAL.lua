@@ -37,6 +37,8 @@ local variables = {
     DropToggle = false,
 }
 -- fuctions
+
+
 local function GetUniqueToolNames()
     local uniqueToolNames = {}
     local toolsFolder = localPlayer.Backpack:FindFirstChild("Tools")
@@ -76,77 +78,10 @@ local Window = OrionLib:MakeWindow({
     SaveConfig = true,
     ConfigFolder = "FloppaHub"
 })
-
-
 local Main = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://7733765398",
     PremiumOnly = false
-})
--- AutoDoch
-Main:AddToggle({
-    Name = "AutoDodge",
-    Default = false,
-    Flag = "AutoDodge",
-    Callback = function(Value)
-        getgenv().AutoDodge = (Value)
-        while AutoDodge do
-            task.wait()
-            local Floppa1 = {
-                [1] = true,
-                [2] = true
-            }
-            local Floppa2 = "DodgeMinigame"
-            game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-            task.wait()
-        end
-    end
-})
-
--- AutoQte
-
-Main:AddToggle({
-    Name = "Auto-QTE",
-    Default = false,
-    Save = true,
-    Flag = "AutoQTE",
-    Callback = function(Value)
-        getgenv().AutoQTE = (Value)
-        local BaseClass = localPlayer.PlayerGui.StatMenu.Holder.ContentFrame.Stats.Body.RightColumn.Content.BaseClass.Type.Text
-        while AutoQTE do
-            task.wait()
-            if BaseClass == "Wizard" then
-                local Floppa1 = true
-                local Floppa2 = "MagicQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                localPlayer.PlayerGui.Combat.MagicQTE.Visible = false
-            elseif BaseClass == "Thief" then
-                local Floppa1 = true
-                local Floppa2 = "DaggerQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                localPlayer.PlayerGui.Combat.DaggerQTE.Visible = false
-                -- Slayer
-            elseif BaseClass == "Slayer" then
-                local Floppa1 = true
-                local Floppa2 = "SpearQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                localPlayer.PlayerGui.Combat.SpearQTE.Visible = false
-                -- Fist
-            elseif BaseClass == "Martial Artist" then
-                local Floppa1 = true
-                local Floppa2 = "FistQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                localPlayer.PlayerGui.Combat.FistQTE.Visible = false
-                -- Sword
-            elseif BaseClass == "Warrior" then
-                local Floppa1 = true
-                local Floppa2 = "SwordQTE"
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                localPlayer.PlayerGui.Combat.SwordQTE.Visible = false
-                task.wait()
-            end
-        end
-    end
 })
 
 Main:AddButton({
@@ -175,8 +110,80 @@ Main:AddButton({
         lp.Character.HumanoidRootPart.CFrame = originalLocation
     end
 })
+function serverhop()
+    local PlaceID = game.PlaceId
+    local AllIDs = {}
+    local foundAnything = ""
+    local actualHour = os.date("!*t").hour
+    local Deleted = false
 
+    function TPReturner()
+        local Site;
+        if foundAnything == "" then
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        else
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+        end
+        local ID = ""
+        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+            foundAnything = Site.nextPageCursor
+        end
+        local num = 0;
+        for i,v in pairs(Site.data) do
+            local Possible = true
+            ID = tostring(v.id)
+            if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                for _,Existing in pairs(AllIDs) do
+                    if num ~= 0 then
+                        if ID == tostring(Existing) then
+                            Possible = false
+                        end
+                    else
+                        if tonumber(actualHour) ~= tonumber(Existing) then
+                            local delFile = pcall(function()
+                                -- delfile("NotSameServers.json")
+                                AllIDs = {}
+                                table.insert(AllIDs, actualHour)
+                            end)
+                        end
+                    end
+                    num = num + 1
+                end
+                if Possible == true then
+                    table.insert(AllIDs, ID)
+                    wait()
+                    pcall(function()
+                        -- writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                        wait()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                    end)
+                    wait(4)
+                end
+            end
+        end
+    end
 
+    function Teleport()
+        while wait() do
+            pcall(function()
+                TPReturner()
+                if foundAnything ~= "" then
+                    TPReturner()
+                end
+            end)
+        end
+    end
+
+    Teleport()
+end
+Main:AddButton({
+    Name = "Server Hop",
+    Default = false,
+    Save = false,
+Callback = function()
+    serverhop()
+end
+})
 local merchNotiEnabled = false
 local merchNotifier = false
 Main:AddToggle({
@@ -221,6 +228,203 @@ Main:AddButton({
         end
     end
 })
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Data"):WaitForChild("ClassMasteryData"):FireServer()
+local playerGui = lp.PlayerGui
+local classMastery = playerGui:WaitForChild("ClassMastery")
+local main = classMastery:WaitForChild("Main")
+local points = main:WaitForChild("Points")
+Main:AddToggle({
+    Name = "Check Mastery Tree Points",
+    Default = false,
+    Save = false,
+    Flag = "MasteryPoints",
+    Callback = function(value)
+        MasteryPoints = value
+        if MasteryPoints then
+            OrionLib:MakeNotification({
+                Name = "Soul Points",
+                Content = points.Text,
+                Image = "rbxassetid://7733765398",
+                Time = 5
+            })
+        end
+    end
+})
+Main:AddToggle({
+    Name = "Mastery Point Notifier",
+    Default = false,
+    Save = true,
+    Flag = "MasteryNotifier",
+    Callback = function(Value)
+        getgenv().MasteryNoti = Value
+
+        lp.PlayerGui.ClassMastery.Main.Points:GetPropertyChangedSignal("Text"):Connect(function()
+            if MasteryNoti then
+                OrionLib:MakeNotification({
+                    Name = "You Got Mastery Points ",
+                    Image = "rbxassetid://7733765398",
+                    Time = 10
+                })
+            end
+        end)
+    end
+})
+local Combat = Window:MakeTab({
+    Name = "Combat",
+    Icon = "rbxassetid://7733765398",
+    PremiumOnly = false
+})
+
+-- AutoDoch
+Combat:AddToggle({
+    Name = "AutoDodge",
+    Default = false,
+    Flag = "AutoDodge",
+    Callback = function(Value)
+        getgenv().AutoDodge = (Value)
+        while AutoDodge do
+            task.wait()
+            local Floppa1 = {
+                [1] = true,
+                [2] = true
+            }
+            local Floppa2 = "DodgeMinigame"
+            game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+            task.wait()
+        end
+    end
+})
+
+Combat:AddToggle({
+    Name = "Auto-QTE",
+    Default = false,
+    Save = true,
+    Flag = "AutoQTE",
+    Callback = function(Value)
+        getgenv().AutoQTE = (Value)
+        local BaseClass = localPlayer.PlayerGui.StatMenu.Holder.ContentFrame.Stats.Body.RightColumn.Content.BaseClass.Type.Text
+        while AutoQTE do
+            task.wait()
+            if BaseClass == "Wizard" then
+                local Floppa1 = true
+                local Floppa2 = "MagicQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                localPlayer.PlayerGui.Combat.MagicQTE.Visible = false
+            elseif BaseClass == "Thief" then
+                local Floppa1 = true
+                local Floppa2 = "DaggerQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                localPlayer.PlayerGui.Combat.DaggerQTE.Visible = false
+                -- Slayer
+            elseif BaseClass == "Slayer" then
+                local Floppa1 = true
+                local Floppa2 = "SpearQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                localPlayer.PlayerGui.Combat.SpearQTE.Visible = false
+                -- Fist
+            elseif BaseClass == "Martial Artist" then
+                local Floppa1 = true
+                local Floppa2 = "FistQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                localPlayer.PlayerGui.Combat.FistQTE.Visible = false
+                -- Sword
+            elseif BaseClass == "Warrior" then
+                local Floppa1 = true
+                local Floppa2 = "SwordQTE"
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                localPlayer.PlayerGui.Combat.SwordQTE.Visible = false
+                task.wait()
+            end
+        end
+    end
+})
+
+Combat:AddToggle({
+    Name = "Legit AutoQTE",
+    Default = false,
+    Save = true,
+    Flag = "Value",
+    Callback = function(Value)
+        if not Value then return end
+
+        _G.Settings = _G.Settings or {}
+        local settings = _G.Settings
+        settings["QTE Timer"] = 3
+        local _timer = settings["QTE Timer"]
+        local legitTimer = math.clamp(_timer, 0.2, 3)
+        local baseToString = {
+            ["Wizard"] = "MagicQTE",
+            ["Thief"] = "DaggerQTE",
+            ["Slayer"] = "SpearQTE",
+            ["Material Artist"] = "FistQTE",
+            ["Warrior"] = "SwordQTE"
+        }
+        local replicatedStorage = game:GetService("ReplicatedStorage")
+        local players = game:GetService("Players")
+        local player = players.LocalPlayer
+
+        local remotes = replicatedStorage:WaitForChild("Remotes")
+        local actionRemote = remotes:WaitForChild("Information"):WaitForChild("RemoteFunction")
+
+        local playerClass, breakTimer = nil, tick()
+
+        local function getClass()
+            while task.wait() do
+                local result, class = pcall(function()
+                    return player.PlayerGui.StatMenu.Holder.ContentFrame.Stats.Body.RightColumn.Content.BaseClass.Type.Text
+                end)
+                if result then
+                    return class
+                end
+            end
+        end
+        local playerClass = getClass()
+
+        task.spawn(function()
+            while task.wait() do
+                actionRemote:FireServer({[1] = true, [2] = true}, "DodgeMinigame")
+            end
+        end)
+
+        if not playerClass or playerClass == "None" then
+            warn("Player has no class!")
+
+            while task.wait(2) do
+                local class = getClass()
+
+                if class ~= "None" then
+                    print("Auto dodge setup")
+                    playerClass = class
+                    break
+                end
+            end
+        end
+
+        local classTranslation = baseToString[playerClass]
+        local classUi = player.PlayerGui.Combat[classTranslation]
+
+        classUi:GetPropertyChangedSignal("Visible"):Connect(function()
+            local newValue = classUi.Visible
+            if newValue then
+                classUi.Visible = false
+                task.wait(3)
+                actionRemote:FireServer(true, classTranslation)
+            end
+        end)
+        player.CharacterAdded:Connect(function()
+            local newClassUi = player.PlayerGui:WaitForChild("Combat"):WaitForChild(classTranslation)
+            newClassUi:GetPropertyChangedSignal("Visible"):Connect(function()
+                local newValue = newClassUi.Visible
+                if newValue then
+                    newClassUi.Visible = false
+                    task.wait(3)
+                    actionRemote:FireServer(true, classTranslation)
+                end
+            end)
+        end)
+    end
+})
+
 -- Teleports
 local Telepor = Window:MakeTab({
     Name = "Teleports",
