@@ -245,7 +245,7 @@ Main:AddToggle({
                 Name = "Soul Points",
                 Content = points.Text,
                 Image = "rbxassetid://7733765398",
-                Time = 5
+                Time = 10
             })
         end
     end
@@ -275,6 +275,30 @@ local Combat = Window:MakeTab({
     PremiumOnly = false
 })
 
+local Floppa = false
+
+function FloppaCollectItems()
+    for _,v in pairs(workspace.Dropped:GetDescendants()) do
+        if v.ClassName == "TouchTransmitter" then
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) 
+            firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) 
+        end
+    end
+end
+
+Main:AddToggle({
+    Name = "Pickup Items Dropped",
+    Flag = "Floppa",
+    Callback = function(Value)
+        Floppa = Value
+        if Floppa then
+            while Floppa do
+                FloppaCollectItems()
+                task.wait()
+            end
+        end
+    end
+})
 -- AutoDoch
 Combat:AddToggle({
     Name = "AutoDodge",
