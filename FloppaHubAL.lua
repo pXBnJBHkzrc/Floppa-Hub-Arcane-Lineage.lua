@@ -326,9 +326,9 @@ Combat:AddToggle({
 })
 
 Combat:AddToggle({
-    Name = "Auto-QTE",
+    Name = "Insta Auto-QTE",
     Default = false,
-    Save = true,
+    Save = false,
     Flag = "AutoQTE",
     Callback = function(Value)
         getgenv().AutoQTE = (Value)
@@ -372,7 +372,7 @@ Combat:AddToggle({
 Combat:AddToggle({
     Name = "Legit AutoQTE",
     Default = false,
-    Save = true,
+    Save = false,
     Flag = "Value",
     Callback = function(Value)
         if not Value then return end
@@ -410,12 +410,6 @@ Combat:AddToggle({
         end
         local playerClass = getClass()
 
-        task.spawn(function()
-            while task.wait() do
-                actionRemote:FireServer({[1] = true, [2] = true}, "DodgeMinigame")
-            end
-        end)
-
         if not playerClass or playerClass == "None" then
             warn("Player has no class!")
 
@@ -437,7 +431,7 @@ Combat:AddToggle({
             local newValue = classUi.Visible
             if newValue then
                 classUi.Visible = false
-                task.wait(3)
+                task.wait(legitTimer) -- use legitTimer instead of hardcoding 3
                 actionRemote:FireServer(true, classTranslation)
             end
         end)
@@ -447,14 +441,20 @@ Combat:AddToggle({
                 local newValue = newClassUi.Visible
                 if newValue then
                     newClassUi.Visible = false
-                    task.wait(3)
+                    task.wait(legitTimer) -- use legitTimer instead of hardcoding 3
                     actionRemote:FireServer(true, classTranslation)
                 end
             end)
         end)
+
+        -- Fix for game registering failure
+        local oldFireServer = actionRemote.FireServer
+        actionRemote.FireServer = function(self,...)
+            oldFireServer(self,...)
+            return true 
+        end
     end
 })
-
 -- Teleports
 local Telepor = Window:MakeTab({
     Name = "Teleports",
