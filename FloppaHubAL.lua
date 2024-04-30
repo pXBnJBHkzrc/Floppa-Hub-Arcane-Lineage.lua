@@ -324,7 +324,27 @@ Combat:AddToggle({
         end
     end
 })
-
+local AutoBlockToggle = {
+    Name = "Auto-Block",
+    Default = false,
+    Save = true,
+    Flag = "AutoBlock"
+}
+Combat:AddToggle(AutoBlockToggle, function(enabled)
+    if not AutoDodge then
+        getgenv().AutoBlockState = enabled
+        while enabled and game.Workspace.Living[lp.Name]:FindFirstChild("FightInProgress") do
+            task.wait()
+            local dodgeData = {
+                [1] = true,
+                [2] = false
+            }
+            local dodgeEvent = "DodgeMinigame"
+            game.ReplicatedStorage.Remotes.Information.RemoteFunction:InvokeServer(dodgeData, dodgeEvent)
+            task.wait()
+        end
+    end
+end)
 Combat:AddToggle({
     Name = "Insta Auto-QTE",
     Default = false,
@@ -912,6 +932,22 @@ Dupe:AddButton({
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,game:GetService("Players").LocalPlayer)
     end
 })
+local Floppa = false -- Initialize Floppa flag
+Main:AddToggle({
+    Name = "Drop All Inventory",
+    Flag = "Floppa",
+    Callback = function(Value)
+        Floppa = Value
+        while Floppa do
+            task.wait()
+            for _, item in ipairs(GetUniqueToolNames()) do
+                inventoryRemote:FireServer("Drop", item)
+            end
+        end
+    end
+})
+OrionLib:Init()
+
 --Gui
 
 local Credits = Window:MakeTab({
