@@ -372,7 +372,7 @@ Combat:AddToggle({
 Combat:AddToggle({
     Name = "Legit AutoQTE",
     Default = false,
-    Save = false,
+    Save = true,
     Flag = "Value",
     Callback = function(Value)
         if not Value then return end
@@ -394,7 +394,7 @@ Combat:AddToggle({
         local player = players.LocalPlayer
 
         local remotes = replicatedStorage:WaitForChild("Remotes")
-        local actionRemote = remotes:WaitForChild("Information"):WaitForChild("RemoteFunction")
+        local actionRemote = remotes:WaitForChild("Information"):WaitForChild("RemoteEvent")
 
         local playerClass, breakTimer = nil, tick()
 
@@ -431,8 +431,8 @@ Combat:AddToggle({
             local newValue = classUi.Visible
             if newValue then
                 classUi.Visible = false
-                task.wait(legitTimer) -- use legitTimer instead of hardcoding 3
-                actionRemote:FireServer(true, classTranslation)
+                task.wait(legitTimer)
+                actionRemote:Fire(true, classTranslation)
             end
         end)
         player.CharacterAdded:Connect(function()
@@ -441,20 +441,17 @@ Combat:AddToggle({
                 local newValue = newClassUi.Visible
                 if newValue then
                     newClassUi.Visible = false
-                    task.wait(legitTimer) -- use legitTimer instead of hardcoding 3
-                    actionRemote:FireServer(true, classTranslation)
+                    task.wait(legitTimer)
+                    actionRemote:Fire(true, classTranslation) 
                 end
             end)
         end)
-
-        -- Fix for game registering failure
-        local oldFireServer = actionRemote.FireServer
-        actionRemote.FireServer = function(self,...)
-            oldFireServer(self,...)
-            return true 
+       local oldFire = actionRemote.Fire
+        actionRemote.Fire = function(self,...)
+            oldFire(self,true)
         end
     end
-})
+}) 
 -- Teleports
 local Telepor = Window:MakeTab({
     Name = "Teleports",
