@@ -933,7 +933,7 @@ Dupe:AddButton({
     end
 })
 local Floppa = false -- Initialize Floppa flag
-Main:AddToggle({
+Dupe:AddToggle({
     Name = "Drop All Inventory",
     Flag = "Floppa",
     Callback = function(Value)
