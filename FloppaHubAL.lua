@@ -353,30 +353,28 @@ Combat:AddToggle({
         end
     end
 })
-local AutoBlockToggle = {
+Combat:AddToggle({
     Name = "Auto-Block",
     Default = false,
-    Save = false,
-    Flag = "AutoBlock"
-}
+    Save = true,
+    Flag = "AutoBlock",
+    Callback = function(Value)
+        if not AutoDodge then
+            getgenv().AutoBlock = (Value)
+            while AutoBlock and game:GetService("Workspace").Living[lp.Name]:WaitForChild("FightInProgress") do
+                task.wait()
+                local Floppa1 = {
+                    [1] = true,
+                    [2] = false
+                }
+                local Floppa2 = "DodgeMinigame"
 
-local lp = game.Players.LocalPlayer -- assuming lp is the local player
-
-Combat:AddToggle(AutoBlockToggle, function(enabled)
-    if not AutoDodge then -- assuming AutoDodge is a variable that is defined elsewhere
-        getgenv().AutoBlockState = enabled
-        while enabled and game.Workspace.Living:FindFirstChild(lp.Name) and game.Workspace.Living[lp.Name]:FindFirstChild("FightInProgress") do
-            task.wait()
-            local dodgeData = {
-                [1] = true,
-                [2] = false
-            }
-            local dodgeEvent = "DodgeMinigame"
-            game.ReplicatedStorage.Remotes.Information.RemoteFunction:InvokeServer(dodgeData, dodgeEvent)
-            task.wait()
+                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
+                task.wait()
+            end
         end
     end
-end)
+})   
 Combat:AddToggle({
     Name = "Insta Auto-QTE",
     Default = false,
