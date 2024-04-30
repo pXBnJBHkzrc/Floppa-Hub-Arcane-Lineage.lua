@@ -76,7 +76,7 @@ local Window = OrionLib:MakeWindow({
     Name = "Floppa Hub | Arcane Lineage",
     HidePremium = false,
     SaveConfig = true,
-    ConfigFolder = "FloppaHub"
+    ConfigFolder = "FloppaHubsito"
 })
 local Main = Window:MakeTab({
     Name = "Main",
@@ -327,7 +327,7 @@ Combat:AddToggle({
 local AutoBlockToggle = {
     Name = "Auto-Block",
     Default = false,
-    Save = true,
+    Save = false,
     Flag = "AutoBlock"
 }
 Combat:AddToggle(AutoBlockToggle, function(enabled)
