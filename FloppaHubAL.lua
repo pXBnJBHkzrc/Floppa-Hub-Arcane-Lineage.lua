@@ -83,6 +83,11 @@ local Main = Window:MakeTab({
     Icon = "rbxassetid://7733765398",
     PremiumOnly = false
 })
+local Automation = Window:MakeTab({
+    Name = "Automatic",
+    Icon = "rbxassetid://7733765398",
+    PremiumOnly = false
+})
 
 Main:AddButton({
     Name = "Pickup All Plants",
@@ -184,9 +189,26 @@ Callback = function()
     serverhop()
 end
 })
+Main:AddButton({
+    Name = "Teleport To Merchant",
+    Callback = function()
+        if game:GetService("Workspace").NPCs:FindFirstChild("Mysterious Merchant") then
+            lp.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").NPCs:FindFirstChild(
+                "Mysterious Merchant").HumanoidRootPart.CFrame
+        else
+            OrionLib:MakeNotification({
+                Name = "Mysterius Merchant Has Not Spawned",
+                Content = "Can't Teleport To Mysterius Merchant, Has Not Appear",
+                Image = "rbxassetid://7733765398",
+                Time = 5
+            })
+        end
+    end
+})
+
 local merchNotiEnabled = false
 local merchNotifier = false
-Main:AddToggle({
+Automation:AddToggle({
     Name = "Merchant Notifier",
     Default = false,
     Save = true,
@@ -212,28 +234,13 @@ Main:AddToggle({
         end
     end
 })
-Main:AddButton({
-    Name = "Teleport To Merchant",
-    Callback = function()
-        if game:GetService("Workspace").NPCs:FindFirstChild("Mysterious Merchant") then
-            lp.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").NPCs:FindFirstChild(
-                "Mysterious Merchant").HumanoidRootPart.CFrame
-        else
-            OrionLib:MakeNotification({
-                Name = "Mysterius Merchant Has Not Spawned",
-                Content = "Can't Teleport To Mysterius Merchant, Has Not Appear",
-                Image = "rbxassetid://7733765398",
-                Time = 5
-            })
-        end
-    end
-})
+
 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Data"):WaitForChild("ClassMasteryData"):FireServer()
 local playerGui = lp.PlayerGui
 local classMastery = playerGui:WaitForChild("ClassMastery")
 local main = classMastery:WaitForChild("Main")
 local points = main:WaitForChild("Points")
-Main:AddToggle({
+Automation:AddToggle({
     Name = "Check Mastery Tree Points",
     Default = false,
     Save = false,
@@ -250,7 +257,7 @@ Main:AddToggle({
         end
     end
 })
-Main:AddToggle({
+Automation:AddToggle({
     Name = "Mastery Point Notifier",
     Default = false,
     Save = true,
@@ -285,8 +292,7 @@ function FloppaCollectItems()
         end
     end
 end
-
-Main:AddToggle({
+Automation:AddToggle({
     Name = "Pickup Items Dropped",
     Flag = "Floppa",
     Callback = function(Value)
@@ -885,6 +891,7 @@ Credits:AddParagraph("Floppa | xalix2267","Owner of The Script and Developer")
 Credits:AddParagraph("Mz | Mz#4822","Contributor and Developer of The Script")
 Credits:AddParagraph("Unknow | IamNotUnknow#1003","Developer of The Script")
 Credits:AddParagraph("Geo | Elgeo#2223","Tester of The Script")
+Credits:AddParagraph("OneFool","Amazing Ui Modified")
 Credits:AddParagraph("You","For Using my Script ❤")
 
 OrionLib:Init()
