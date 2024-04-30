@@ -359,10 +359,13 @@ local AutoBlockToggle = {
     Save = false,
     Flag = "AutoBlock"
 }
+
+local lp = game.Players.LocalPlayer -- assuming lp is the local player
+
 Combat:AddToggle(AutoBlockToggle, function(enabled)
-    if not AutoDodge then
+    if not AutoDodge then -- assuming AutoDodge is a variable that is defined elsewhere
         getgenv().AutoBlockState = enabled
-        while enabled and game.Workspace.Living[lp.Name]:FindFirstChild("FightInProgress") do
+        while enabled and game.Workspace.Living:FindFirstChild(lp.Name) and game.Workspace.Living[lp.Name]:FindFirstChild("FightInProgress") do
             task.wait()
             local dodgeData = {
                 [1] = true,
