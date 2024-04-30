@@ -205,6 +205,35 @@ Main:AddButton({
         end
     end
 })
+local Walk = 1.6
+Main:AddToggle({
+    Name = "Enable Sprint Speed",
+    Default = false,
+    Callback = function(Value)
+        Walkspeeder = Value
+        while Walkspeeder do
+            task.wait()
+            if Walkspeeder then
+                lp.Character.Effects.RunBuff.Value = Walk
+            end
+        end
+    end
+})
+
+Main:AddSlider({
+    Name = "Change Sprint Speed",
+    Min = 1,
+    Max = 10,
+    Default = 1,
+    Increment = 1,
+    ValueName = "Walkspeed",
+    Callback = function(Value)
+        Walk = Value
+        if Walkspeeder then
+            lp.Character.Effects.RunBuff.Value = Value
+        end
+    end
+})
 
 local merchNotiEnabled = false
 local merchNotifier = false
