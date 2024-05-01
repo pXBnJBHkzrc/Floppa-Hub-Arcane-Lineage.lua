@@ -75,7 +75,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Unk
 local Window = OrionLib:MakeWindow({
     Name = "Floppa Hub | Arcane Lineage",
     HidePremium = false,
-    SaveConfig = true,
+    SaveConfig = false,
     ConfigFolder = "FloppaHubsito"
 })
 local Main = Window:MakeTab({
@@ -353,28 +353,6 @@ Combat:AddToggle({
         end
     end
 })
-Combat:AddToggle({
-    Name = "Auto-Block",
-    Default = false,
-    Save = true,
-    Flag = "AutoBlock",
-    Callback = function(Value)
-        if not AutoDodge then
-            getgenv().AutoBlock = (Value)
-            while AutoBlock and game:GetService("Workspace").Living[lp.Name]:WaitForChild("FightInProgress") do
-                task.wait()
-                local Floppa1 = {
-                    [1] = true,
-                    [2] = false
-                }
-                local Floppa2 = "DodgeMinigame"
-
-                game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2)
-                task.wait()
-            end
-        end
-    end
-})   
 Combat:AddToggle({
     Name = "Insta Auto-QTE",
     Default = false,
