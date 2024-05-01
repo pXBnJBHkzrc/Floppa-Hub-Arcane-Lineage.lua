@@ -507,7 +507,7 @@ Telepor:AddToggle({
 Telepor:AddDropdown({
     Name = "Spawns/Zones",
     Default = "",
-    Options = {"Level Up Room", "Caldera", "Ruins/Sand Town","Volcano (Dragon Door)","Way of Life (Covenant)","Blades Of World (Covenant)","Fractured Realm","Tundra Door",},
+    Options = {"Level Up Room", "Caldera", "Ruins/Sand Town","Volcano (Dragon Door)","Thorian Door","Way of Life (Covenant)","Blades Of World (Covenant)","Fractured Realm","Tundra Door",},
     Callback = function(Value)
         if Value == "Caldera" then
             local Vector3End = Vector3.new(-221.396332, 46.5463257, -3328.51367)
@@ -557,10 +557,15 @@ Telepor:AddDropdown({
             local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
                 TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
             tween:Play()
+        elseif Value == "Thorian Door" then
+            local Vector3End = Vector3.new(2235, 24, -373)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
         end
     end
 })
-
 
 Telepor:AddDropdown({
     Name = "Misc",
