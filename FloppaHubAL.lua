@@ -507,7 +507,7 @@ Telepor:AddToggle({
 Telepor:AddDropdown({
     Name = "Spawns/Zones",
     Default = "",
-    Options = { "Caldera", "Ruins/Sand Town","Volcano (Dragon Door)","Way of Life (Covenant)","Blades Of World (Covenant)","Fractured Realm","Tundra Door",},
+    Options = {"Level Up Room", "Caldera", "Ruins/Sand Town","Volcano (Dragon Door)","Way of Life (Covenant)","Blades Of World (Covenant)","Fractured Realm","Tundra Door",},
     Callback = function(Value)
         if Value == "Caldera" then
             local Vector3End = Vector3.new(-221.396332, 46.5463257, -3328.51367)
@@ -551,6 +551,12 @@ Telepor:AddDropdown({
             local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
                 TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
             tween:Play()
+        elseif Value == "Level Up Room" then
+            local Vector3End = Vector3.new(789, 235, 2121)
+            local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+            tween:Play()
         end
     end
 })
@@ -586,7 +592,7 @@ Telepor:AddDropdown({
             TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
         tween:Play()
     elseif Value == "Atalar(Shard Fusioner) " then
-        local Vector3End = Vector3.new(-366.4, 43.8, -3390.5)
+        local Vector3End = Vector3.new(-367, 44, -3385)
         local Time = 0
         local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
             TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
@@ -967,7 +973,7 @@ Credits:AddParagraph("Floppa | xalix2267","Owner of The Script and Developer")
 Credits:AddParagraph("Mz | Mz#4822","Contributor and Developer of The Script")
 Credits:AddParagraph("Unknow | IamNotUnknow#1003","Developer of The Script")
 Credits:AddParagraph("Geo | Elgeo#2223","Tester of The Script")
-Credits:AddParagraph("OneFool","Amazing Ui Modified")
+Credits:AddParagraph("OneFool","Ui Modified")
 Credits:AddParagraph("You","For Using my Script ❤")
 
 OrionLib:Init()
