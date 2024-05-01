@@ -673,8 +673,11 @@ Telepor:AddDropdown({
         Options = { "Ysa(Warrior)", "Tivek (Spear)","Boots(Thief)","Arandor(Wizzard)","Doran(Martial Artist)"},
         Callback = function(Value)  
         if Value == "Doran(Martial Artist)" then
-            local Vector3End = Vector3.new(486.7, 116.9, -2654.2)
+            local Vector3End = Vector3.new(483, 117, -2653)
             local Time = 0
+            local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
+                    TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
+                    tween:Play()
             elseif Value == "Arandor(Wizzard)" then
                 local Vector3End = Vector3.new(593.8, 124.1, -3608.0)
                 local Time = 0
@@ -693,7 +696,6 @@ Telepor:AddDropdown({
                 local tween = game:GetService("TweenService"):Create(lp.Character.HumanoidRootPart,
                     TweenInfo.new(Time), { CFrame = CFrame.new(Vector3End) })
                 tween:Play()
-          
             elseif Value == "Boots(Thief)" then
                 local Vector3End = Vector3.new(-423.1, 42.9, -3529.1)
                 local Time = 0
