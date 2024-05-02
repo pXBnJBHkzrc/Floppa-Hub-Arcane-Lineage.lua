@@ -353,6 +353,22 @@ Combat:AddToggle({
         end
     end
 })
+Combat:AddToggle({ Name = "Auto-Dodge Thorian", 
+Default = false,
+ Save = false,
+  Flag = "AutOFloppa",
+   Callback = function(Value) 
+    getgenv().AutOFloppa = (Value) 
+    while AutoDodge and game:GetService("Workspace").Living[lp.Name]:WaitForChild("FightInProgress") 
+    do task.wait() 
+        local Floppa1 = { 
+        [1] = true, 
+        [2] = true }
+         local Floppa2 = "ThorianQTE"
+ game:GetService("ReplicatedStorage").Remotes.Information.RemoteFunction:FireServer(Floppa1, Floppa2) task.wait()
+        end
+    end
+ })
 Combat:AddToggle({
     Name = "Insta Auto-QTE",
     Default = false,
