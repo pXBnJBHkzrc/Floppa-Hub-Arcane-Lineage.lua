@@ -353,7 +353,8 @@ Combat:AddToggle({
         end
     end
 })
-Combat:AddToggle({ Name = "Auto-Dodge Thorian", 
+Combat:AddToggle({
+ Name = "Auto-Minigame Thorian", 
 Default = false,
  Save = false,
   Flag = "AutOFloppa",
